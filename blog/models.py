@@ -1,18 +1,22 @@
 from datetime import time
 from django.db import models
 from django.db.models.base import Model
+from django.urls import reverse
 from django.db.models.deletion import CASCADE
 from django.utils import timezone
 
 # Create your models here.
 class Post(models.Model):
     title = models.CharField(max_length=100)
-    author = models.CharField(max_length=50)
+    author = models.ForeignKey('auth.User', on_delete=CASCADE)
     createTime = models.DateTimeField(default=timezone.now())
     publishTime = models.DateTimeField(blank=True, null=True)
 
     def publish(self):
         self.publishTime = timezone.now()
+
+    def getAbsoluteUrl(self):
+        return reverse('post_detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.title
@@ -22,6 +26,9 @@ class Comment(models.Model):
     content = models.CharField(max_length=100)
     post = models.ForeignKey(Post, related_name='comments', on_delete=CASCADE)
     commentTime = models.DateTimeField(default=timezone.now())
+
+    def getAbsoluteUrl(self):
+        return reverse('post_list')
 
     def __str__(self):
         return self.author
