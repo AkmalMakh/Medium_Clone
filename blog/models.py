@@ -9,11 +9,13 @@ from django.utils import timezone
 class Post(models.Model):
     title = models.CharField(max_length=100)
     author = models.ForeignKey('auth.User', on_delete=CASCADE)
+    content = models.TextField()
     createTime = models.DateTimeField(default=timezone.now())
     publishTime = models.DateTimeField(blank=True, null=True)
 
     def publish(self):
         self.publishTime = timezone.now()
+        self.save()
 
     def getAbsoluteUrl(self):
         return reverse('post_detail', kwargs={'pk': self.pk})
@@ -23,12 +25,17 @@ class Post(models.Model):
 
 class Comment(models.Model):
     author = models.CharField(max_length=50)
-    content = models.CharField(max_length=100)
+    content = models.TextField()
     post = models.ForeignKey(Post, related_name='comments', on_delete=CASCADE)
     commentTime = models.DateTimeField(default=timezone.now())
+    approved_comments = models.BooleanField(default=False)  
+
+    def appprove(self):
+        self.approved_comments = True
+        self.save()
 
     def getAbsoluteUrl(self):
-        return reverse('post_list')
+        return reverse("post_list", kwargs={'pk':self.pk})
 
     def __str__(self):
         return self.author
