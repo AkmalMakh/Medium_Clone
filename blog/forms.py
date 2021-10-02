@@ -7,10 +7,10 @@ class postForm(forms.ModelForm):
 
     class Meta():
         model = Post
-        fields = ('author', 'title')
+        fields = ('author', 'title', 'content')
 
 class commentForm(forms.ModelForm):
 
     class Meta():
         model = Comment
-        fields = ('author')
+        fields = ('author', 'content')
