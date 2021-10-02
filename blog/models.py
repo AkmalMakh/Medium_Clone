@@ -3,13 +3,12 @@ from django.db import models
 from django.db.models.base import Model
 from django.urls import reverse
 from django.db.models.deletion import CASCADE
-from django.utils import timezone
+from django.utils import timezone   
 
 # Create your models here.
 class Post(models.Model):
     title = models.CharField(max_length=100)
     author = models.ForeignKey('auth.User', on_delete=CASCADE)
-    content = models.TextField()
     createTime = models.DateTimeField(default=timezone.now())
     publishTime = models.DateTimeField(blank=True, null=True)
 
@@ -25,7 +24,6 @@ class Post(models.Model):
 
 class Comment(models.Model):
     author = models.CharField(max_length=50)
-    content = models.TextField()
     post = models.ForeignKey(Post, related_name='comments', on_delete=CASCADE)
     commentTime = models.DateTimeField(default=timezone.now())
     approved_comments = models.BooleanField(default=False)  
