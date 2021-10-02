@@ -7,14 +7,18 @@ from django.db.models.fields.related import ForeignKey
 from django.urls import reverse 
 
 # Create your models here.
-class Post(models.Models):
+class Post(models.Model):
     title = models.CharField(max_length=180)
     author = models.CharField(max_length=50)
     created_time = models.DateTimeField(default=timezone.now())
     updated_time = models.DateTimeField(blank=True, null=True)
 
-    def update(self):
-        self.updated_time = timezone.now()
+    def publish(self):
+        self.published_date = timezone.now()
+        self.save()
+
+    def approve_comments(self):
+        return self.comments.filter(approved_comments = True)
 
     def getAbsoluteUrl(self):
         return reverse("post:detail", kwargs={'pk':self.pk})
@@ -28,6 +32,7 @@ class Comment(models.Model):
     nick = models.CharField(max_length=50)
     context = models.CharField(max_length=1000)
     commets_time = models.DateTimeField(default=timezone.now())
+    approved_comments = models.BooleanField(default=False)
 
     def getAbsoluteUrl(self):
         return reverse("post:list")
