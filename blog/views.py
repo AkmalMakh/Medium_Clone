@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_list_or_404, redirect
 from django.utils import timezone
 from django.views.generic import (TemplateView,DetailView,CreateView,ListView, UpdateView,DeleteView)
 
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
@@ -51,7 +52,23 @@ class DraftListView(LoginRequiredMixin, ListView):
 
 
 # Comments 
-
+@login_required
 def add_comments_to_post(request, pk):
-    pass
+    # get single post with id
+    post = get_list_or_404(Post, pk=pk)
+    # check if comming request is type POST
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        # checking is user form is valid before saving in db 
+        if form.is_valid():
+            comment = form.save(commit=False)
+            # adding to specific post a comment 
+            comment.post = post
+            comment.save()
+            return redirect('post_detail', pk=post.pk)
+    else:
+        form = CommentForm()
+
+    return render(request, 'blog/comment_form.html', {'form':form})            
+
     
