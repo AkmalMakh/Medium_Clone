@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
-from blog.models import Post
+from blog.models import Comment, Post
 from blog.forms  import PostForm, CommentForm
 
 # Create your views here.
@@ -50,8 +50,14 @@ class DraftListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Post.objects.filter(published_date__isnull=True).order_by('create_date')
 
+@login_required
+def post_publish(request, pk):
+    post = get_list_or_404(Post, pk=pk)
+    post.publish
+    return redirect("post_detail", pk=pk)
 
 # Comments 
+
 @login_required
 def add_comments_to_post(request, pk):
     # get single post with id
@@ -71,4 +77,15 @@ def add_comments_to_post(request, pk):
 
     return render(request, 'blog/comment_form.html', {'form':form})            
 
-    
+@login_required
+def comment_approve(request, pk):
+    comment = get_list_or_404(Comment, pk=pk)
+    comment.approve()
+    return redirect('post_detail',pk=comment.post.pk)
+
+@login_required
+def comment_remove(request, pk):
+    comment = get_list_or_404(Comment, pk=pk)
+    post_pk = comment.post.pk
+    comment.delete()
+    return redirect('post_detail', pk=post_pk)   
