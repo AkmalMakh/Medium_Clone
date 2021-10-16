@@ -1,0 +1,12 @@
+{% extends 'blog_app/blog_app.html' %}
+
+
+{% block body_block %}
+
+<h1>Welcome to a list of all  the Posts</h1>
+<ol>
+    {% for post in posts %}
+        <h2><li><a href="{{post.id}}">{{post.title}}</a></li></h2>
+    {% endfor %}
+</ol>
+{% endblock %}

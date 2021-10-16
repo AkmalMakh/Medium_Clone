@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Text
 from django.utils import timezone
 from django.db import models
 from django.db.models.deletion import CASCADE 
@@ -10,6 +10,7 @@ from django.urls import reverse
 class Post(models.Model):
     title = models.CharField(max_length=180)
     author = models.CharField(max_length=50)
+    context = models.TextField(default="Fuck")
     created_time = models.DateTimeField(default=timezone.now())
     updated_time = models.DateTimeField(blank=True, null=True)
 
