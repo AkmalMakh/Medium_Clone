@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.shortcuts import render
 from blog import models
 from django.views.generic import View, TemplateView, ListView, DetailView, UpdateView, DeleteView, CreateView
@@ -9,6 +10,10 @@ class PostListView(ListView):
     context_object_name = "posts"
     model = models.Post
     template_name = "blog_app/post_list.html"
+    
+    # def get_queryset(self):
+    #     return models.Post.objects.filter(updated_time__lte=timezone.now()).order_by('-updated_time')
+    
 
 class PostDetailView(DetailView):
      # defining conetxt object name by default it is school_list because of we are using Listview
@@ -16,6 +21,7 @@ class PostDetailView(DetailView):
     model = models.Post
     template_name = 'blog_app/post_detail.html'
 
+    
 class PostCreateView(CreateView):
     fields = ('title', 'author', 'context')
     model = models.Post
