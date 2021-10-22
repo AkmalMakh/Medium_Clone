@@ -9,6 +9,8 @@ from . import models
 class indexView(TemplateView):
     template_name = 'index.html'
 
+# needs post list class in here as default home page
+
 class postCreateView(CreateView):
     template_name = 'postCreate.html'
     model = models.Post
