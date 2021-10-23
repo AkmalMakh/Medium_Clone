@@ -1,0 +1,9 @@
+{% extends 'blog_app/base.html' %} {% block body_block %}
+
+<div class="jumbotron">
+	<h1>{{post_details.title}}</h1>
+	<h5>{{post_details.author}}</h5>
+	<p>{{post_details.content}}</p>
+</div>
+
+{% endblock %}

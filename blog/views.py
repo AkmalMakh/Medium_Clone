@@ -3,7 +3,7 @@ from django.db.models import fields
 from django.views.generic import(View, TemplateView, CreateView, DetailView, ListView)
 from django.views.generic.detail import DetailView
 from django.urls import reverse_lazy
-from datetime import timezone
+from django.utils import timezone
 from . import models
 
 # Create your views here.
@@ -22,15 +22,18 @@ class postDetailView(DetailView):
     context_object_name = 'post_details'
     model = models.Post
     template_name = 'blog_app/postDetail.html'
-
-    # def get_queryset(self):
-    #     return models.Post.objects.filter(publishTime__lte=timezone.now().order_by('-publishTime'))
-
-
     
 class postListView(ListView):
     context_object_name = 'posts'
     template_name = 'blog_app/postList.html'
+    model = models.Post
+
+    def get_queryset(self):
+        return models.Post.objects.filter(publishTime__lte=timezone.now()).order_by('-publishTime')
+
+class postDraftListView(ListView):
+    context_object_name = 'posts'
+    template_name = 'blog_app/postDraftList.html'
     model = models.Post
 
 
