@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.db.models import fields
 from django.views.generic import(View, TemplateView, CreateView, DetailView, ListView)
 from django.views.generic.detail import DetailView
+from django.urls import reverse_lazy
 from datetime import timezone
 from . import models
 
@@ -15,14 +16,17 @@ class postCreateView(CreateView):
     template_name = 'blog_app/postCreate.html'
     model = models.Post
     fields = ('title', 'content', 'author')
+    success_url = reverse_lazy('basic_app:postList')
 
 class postDetailView(DetailView):
     context_object_name = 'post_details'
     model = models.Post
     template_name = 'blog_app/postDetail.html'
 
-    def get_queryset(self):
-        return models.Post.objects.filter(publishTime__lte=timezone.now().order_by('-publishTime'))
+    # def get_queryset(self):
+    #     return models.Post.objects.filter(publishTime__lte=timezone.now().order_by('-publishTime'))
+
+
     
 class postListView(ListView):
     context_object_name = 'posts'
