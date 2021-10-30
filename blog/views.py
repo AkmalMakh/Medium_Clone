@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import fields
 from django.views.generic import(View, TemplateView, CreateView, DetailView, ListView)
 from django.views.generic.detail import DetailView
@@ -37,7 +37,10 @@ class postDraftListView(ListView):
     template_name = 'blog_app/postDraftList.html'
     model = models.Post
 
-    
+def postPublish(request, pk):
+    post = get_object_or_404(models.Post, pk = pk)
+    post.publish()
+    return redirect('basic_app:postDetail', pk = pk)
 
 
 # class commentCreateView(CreateView):

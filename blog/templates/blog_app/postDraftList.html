@@ -7,7 +7,7 @@
 	<h2>
 		<li>
 			<a href="{% url 'basic_app:postDetail' pk=post.pk %}">{{post.title}}</a>
-			<input type="button" class="btn btn-pirmary" value="Publish" />
+			<a class="btn btn-primary" href="{% url 'basic_app:postPublish' pk=post.pk %}">Submit</a>
 		</li>
 	</h2>
 	{% endfor %}
