@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.utils import timezone
 from . import models
 
+
 # Create your views here.
 class indexView(TemplateView):
     template_name = 'index.html'
@@ -35,6 +36,8 @@ class postDraftListView(ListView):
     context_object_name = 'posts'
     template_name = 'blog_app/postDraftList.html'
     model = models.Post
+
+    
 
 
 # class commentCreateView(CreateView):

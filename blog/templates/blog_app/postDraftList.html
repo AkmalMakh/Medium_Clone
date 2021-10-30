@@ -5,7 +5,10 @@
 <ol>
 	{% for post in posts %}
 	<h2>
-		<li><a href="{% url 'basic_app:postDetail' pk=post.pk %}">{{post.title}}</a></li>
+		<li>
+			<a href="{% url 'basic_app:postDetail' pk=post.pk %}">{{post.title}}</a>
+			<input type="button" class="btn btn-pirmary" value="Publish" />
+		</li>
 	</h2>
 	{% endfor %}
 </ol>
