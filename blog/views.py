@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_list_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.views.generic import (TemplateView,DetailView,CreateView,ListView, UpdateView,DeleteView)
 
@@ -26,25 +26,31 @@ class PostDetailView(DetailView):
     model = Post
 
 #  Class based used of decorators to make user log in 
-class CreatePostView(LoginRequiredMixin, CreateView):
+
+class CreatePostView(LoginRequiredMixin,CreateView):
     login_url = '/login/'
     redirect_field_name = 'blog/post_detail.html'
-    from_class = PostForm
-    model = Post
 
-class PostUpdateView(LoginRequiredMixin, UpdateView):
+    form_class = PostForm
+
+    model = Post    
+
+class PostUpdateView(LoginRequiredMixin,UpdateView):
     login_url = '/login/'
     redirect_field_name = 'blog/post_detail.html'
-    from_class = PostForm
+
+    form_class = PostForm
+
     model = Post
 
-class PostDeleteView(LoginRequiredMixin, DeleteView):
+class PostDeleteView(LoginRequiredMixin,DeleteView):
     model = Post
     success_url = reverse_lazy('post_list')
 
-class DraftListView(LoginRequiredMixin, ListView):
+class DraftListView(LoginRequiredMixin,ListView):
     login_url = '/login/'
     redirect_field_name = 'blog/post_list.html'
+
     model = Post
 
     def get_queryset(self):
@@ -52,16 +58,16 @@ class DraftListView(LoginRequiredMixin, ListView):
 
 @login_required
 def post_publish(request, pk):
-    post = get_list_or_404(Post, pk=pk)
-    post.publish
-    return redirect("post_detail", pk=pk)
+    post = get_object_or_404(Post, pk=pk)
+    post.publish()
+    return redirect('post_detail', pk=pk)
 
 # Comments 
 
 @login_required
 def add_comments_to_post(request, pk):
     # get single post with id
-    post = get_list_or_404(Post, pk=pk)
+    post = get_object_or_404(Post, pk=pk)
     # check if comming request is type POST
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -79,13 +85,13 @@ def add_comments_to_post(request, pk):
 
 @login_required
 def comment_approve(request, pk):
-    comment = get_list_or_404(Comment, pk=pk)
+    comment = get_object_or_404(Comment, pk=pk)
     comment.approve()
     return redirect('post_detail',pk=comment.post.pk)
 
 @login_required
 def comment_remove(request, pk):
-    comment = get_list_or_404(Comment, pk=pk)
+    comment = get_object_or_404(Comment, pk=pk)
     post_pk = comment.post.pk
     comment.delete()
     return redirect('post_detail', pk=post_pk)   

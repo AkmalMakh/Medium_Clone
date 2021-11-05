@@ -7,6 +7,11 @@
     font-size: 1.5em;
 }
 
+.centerstage{
+  margin: auto;
+
+}
+
 /*COLOR CHANGER*/
 /*Credit and Source: http://codepen.io/thapliyalshivam/pen/dvgXVO*/
 .loader{
@@ -14,6 +19,23 @@
     color: linear-gradient(45deg,#0f8,#08f);
     animation:hue 5000ms infinite linear;
   }
+.postdate{
+  text-align: center;
+} 
+ .posttitle{
+  font-family: 'Noto Sans Mono', monospace;
+  font-size: 3em;
+  text-align: center;
+ }
+
+ .postcontent{
+   font-family: 'Montserrat';
+   font-size: 1.5em;
+ }
+.btn-comment{
+  position: absolute;
+  right: 0px;
+}
   
   @keyframes spinify {
     0% {
