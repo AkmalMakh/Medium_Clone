@@ -3,14 +3,14 @@
 <h1>This is your Draft of posts</h1>
 
 <ol>
-	{% for post in posts %}
+	{% for post in posts %} {% if not post.publishTime %}
 	<h2>
 		<li>
 			<a href="{% url 'basic_app:postDetail' pk=post.pk %}">{{post.title}}</a>
 			<a class="btn btn-primary" href="{% url 'basic_app:postPublish' pk=post.pk %}">Submit</a>
 		</li>
 	</h2>
-	{% endfor %}
+	{% endif %} {% endfor %}
 </ol>
 
 {% endblock %}

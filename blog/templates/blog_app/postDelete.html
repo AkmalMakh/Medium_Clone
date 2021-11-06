@@ -1,0 +1,10 @@
+{% extends 'blog_app/base.html' %} {% block body_block %}
+
+<h1>Are you sure you want to delete post "{{postList.name}}"?</h1>
+
+<form method="POST">
+	{% csrf_token %}
+	<input type="submit" class="btn btn-danger" value="Delete" />
+</form>
+
+{% endblock %}
