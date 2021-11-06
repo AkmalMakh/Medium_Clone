@@ -8,7 +8,7 @@ from django.utils import timezone
 # Create your models here.
 class Post(models.Model):
     title = models.CharField(max_length=100)
-    content = models.TextField(default='write something')
+    content = models.TextField(default='')
     author = models.ForeignKey('auth.User', on_delete=CASCADE)
     createTime = models.DateTimeField(default=timezone.now())
     publishTime = models.DateTimeField(blank=True, null=True)

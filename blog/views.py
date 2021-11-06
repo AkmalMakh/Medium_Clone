@@ -1,9 +1,11 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import fields
-from django.views.generic import(View, TemplateView, CreateView, DetailView, ListView, DeleteView)
+from django.views.generic import(View, TemplateView, CreateView, DetailView, ListView, DeleteView, UpdateView)
 from django.views.generic.detail import DetailView
 from django.urls import reverse_lazy
 from django.utils import timezone
+
+from blog.forms import postForm
 from . import models
 
 
@@ -17,7 +19,7 @@ class postCreateView(CreateView):
     template_name = 'blog_app/postCreate.html'
     model = models.Post
     fields = ('title', 'content', 'author')
-    success_url = reverse_lazy('basic_app:postList')
+    success_url = reverse_lazy('basic_app:draftList')
 
 class postDetailView(DetailView):
     context_object_name = 'post_details'
@@ -41,7 +43,21 @@ class postDeleteView(DeleteView):
     model = models.Post
     context_object_name = 'posts'
     template_name = 'blog_app/postDelete.html'
-    success_url = reverse_lazy('basic_app:list')
+    success_url = reverse_lazy('basic_app:draftList')
+
+
+class postUpdateView(UpdateView):
+    fields = ('title', 'content')
+    model = models.Post
+    form_class = postForm
+    success_url = reverse_lazy('basic_app:draftList')
+
+def postUnpublish(request, pk):
+    post = get_object_or_404(models.Post, pk = pk)
+    post.publishTime = None
+    post.save()
+    return redirect('basic_app:postList')
+    
 
 def postPublish(request, pk):
     post = get_object_or_404(models.Post, pk = pk)

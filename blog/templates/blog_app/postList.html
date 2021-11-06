@@ -6,6 +6,7 @@
 	{% for post in posts %}
 	<h2>
 		<li><a href="{% url 'basic_app:postDetail' pk=post.pk %}">{{post.title}}</a></li>
+		<a class="btn btn-primary" href="{% url 'basic_app:postUnpublish' pk=post.pk %}">Unpublish</a>
 	</h2>
 	{% endfor %}
 </ol>
