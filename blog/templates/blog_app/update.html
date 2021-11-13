@@ -11,7 +11,13 @@
 <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-
+    {% if form.instance.pk %}
+    {% if post.published_time %}
+    <a type="submit" class="btn btn-primary" href="{% url 'blog_app:postUnPublish' pk=post.pk %}">UnPublish</a>
+    {% else %}
+    <a type="submit" class="btn btn-primary" href="{% url 'blog_app:postPublish' pk=post.pk %}">Publish</a>
+    {% endif %}
+    {% endif %}
     <input type="submit" class="btn btn-primary" value="Submit" />
 </form>
 

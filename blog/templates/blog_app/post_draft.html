@@ -6,10 +6,10 @@
 <h1>Welcome to a list of all  the Posts</h1>
 <ol>
     {% for post in posts %}
-    {% if post.published_time %}
-        <h6 style="margin: 0%; margin-top: 20px;">[ {{post.author}} ]</h6>
-        <h2 style="margin: 0%; margin-top: 5px; color:#3F3F3F; font-weight: bolder;">
-            <a style="color:#3F3F3F; text-decoration: none;" href="{{post.id}}">{{post.title}}</a>
+    {% if not post.published_time %}
+        <h6 style="margin: 0%; margin-top: 30px;">[ {{post.author}} ]</h6>
+        <h2 style="color:#3F3F3F; font-weight: bolder; margin-top: 5px;">
+            <a style="color:#3F3F3F; text-decoration: none;" href="{% url 'blog_app:detail' pk=post.pk %}">{{post.title}}</a>
         </h2>
         <h4 style="margin: 0%; margin-top: 5px; margin-left: 20px;">{{post.context}}</h4>
     {% endif %}
