@@ -18,7 +18,7 @@ class Post(models.Model):
         self.save()
 
     def getAbsoluteUrl(self):
-        return reverse('post_detail', kwargs={'pk': self.pk})
+        return reverse('postDetail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.title
@@ -35,7 +35,7 @@ class Comment(models.Model):
         self.save()
 
     def getAbsoluteUrl(self):
-        return reverse("post_list", kwargs={'pk':self.pk})
+        return reverse("postList", kwargs={'pk':self.pk})
 
     def __str__(self):
         return self.author

@@ -1,3 +1,4 @@
+from typing import List
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import fields
 from django.views.generic import(View, TemplateView, CreateView, DetailView, ListView, DeleteView, UpdateView)
@@ -51,6 +52,11 @@ class postUpdateView(UpdateView):
     model = models.Post
     form_class = postForm
     success_url = reverse_lazy('basic_app:draftList')
+
+class commentCreateView(CreateView):
+    fields = ('author', 'content', 'post')
+    model = models.Comment
+    template_name = 'blog_app/commentCreate.html'
 
 def postUnpublish(request, pk):
     post = get_object_or_404(models.Post, pk = pk)

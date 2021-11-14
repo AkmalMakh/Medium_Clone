@@ -4,7 +4,8 @@
 	<h1>{{post_details.title}}</h1>
 	<h5>{{post_details.author}}</h5>
 	<p>{{post_details.content}}</p>
-	<a class="btn btn-primary" href="{% url 'basic_app:postUpdate' pk=post.pk %}">Update</a>
+	<a class="btn btn-primary" href="{% url 'basic_app:postUpdate' pk=postDetail.pk %}">Update post</a>
+	<a class="btn btn-primary" href="{% url 'basic_app:commentCreate' pk=postDetail.pk %}">Create comment</a>
 </div>
 
 {% endblock %}
