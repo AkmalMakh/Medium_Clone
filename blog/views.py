@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import fields
 from django.views.generic import(View, TemplateView, CreateView, DetailView, ListView, DeleteView, UpdateView)
 from django.views.generic.detail import DetailView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 
 from blog.forms import postForm
@@ -48,10 +48,13 @@ class postDeleteView(DeleteView):
 
 
 class postUpdateView(UpdateView):
-    fields = ('title', 'content')
     model = models.Post
     form_class = postForm
-    success_url = reverse_lazy('basic_app:draftList')
+    template_name = 'blog_app/postUpdate.html'
+    
+    def get_success_url(self):
+        print(self.object.pk)   # this is getting post.pk
+        return reverse('basic_app:postDetail', kwargs={'pk': self.object.pk})
 
 class commentCreateView(CreateView):
     fields = ('author', 'content', 'post')
