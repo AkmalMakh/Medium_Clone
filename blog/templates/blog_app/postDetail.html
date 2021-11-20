@@ -2,8 +2,22 @@
 
 <div class="jumbotron">
 	<h1>{{post_details.title}}</h1>
-	<h5>{{post_details.author}}</h5>
+	<h4>{{post_details.author}}</h4>
 	<p>{{post_details.content}}</p>
+
+	<div class="container">
+		<p style="color: aqua">---------comment---------</p>
+		{% for comment in post_details.comments.all %}
+		<div class="container container-comment">
+			<h4>[{{comment.author}}]</h4>
+			<h5>{{comment.content}}</h5>
+		</div>
+
+		{% empty %}
+		<p>No comment</p>
+		{% endfor %}
+	</div>
+
 	<a class="btn btn-primary" href="{% url 'basic_app:postUpdate' pk=post_details.pk %}">Update post</a>
 	<a class="btn btn-primary" href="{% url 'basic_app:commentCreate' pk=post_details.pk %}">Create comment</a>
 </div>

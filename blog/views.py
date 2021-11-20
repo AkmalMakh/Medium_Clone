@@ -60,6 +60,10 @@ class commentCreateView(CreateView):
     fields = ('author', 'content', 'post')
     model = models.Comment
     template_name = 'blog_app/commentCreate.html'
+    
+    def get_success_url(self):
+        print(self.object.pk)   # this is getting post.pk
+        return reverse('basic_app:postDetail', kwargs={'pk': self.object.post.pk})    
 
 def postUnpublish(request, pk):
     post = get_object_or_404(models.Post, pk = pk)
