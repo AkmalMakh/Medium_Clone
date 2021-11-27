@@ -7,14 +7,15 @@
 <ol>
     {% for post in posts %}
     {% if post.published_time %}
-        <h6 style="margin: 0%; margin-top: 20px;">[ {{post.author}} ]</h6>
-        <h2 style="margin: 0%; margin-top: 5px; color:#3F3F3F; font-weight: bolder;">
-            <a style="color:#3F3F3F; text-decoration: none;" href="{{post.id}}">{{post.title}}</a>
-        </h2>
-        <h4 style="margin: 0%; margin-top: 5px; margin-left: 20px;">{{post.context}}</h4>
+        <div style="margin: 0%; margin-top: 20px; margin-bottom:20px; width: 600px; height: 185px;border:2px ridge rgba(186, 186, 186, .3);">
+            <a style="color:#3F3F3F; text-decoration: none;" href="{{post.id}}">
+                <h6 style="margin: 0%; margin-top: 20px; margin-left: 20px;">[ {{post.author}} ]</h6>
+                <h2 style="margin: 0%; margin-top: 5px; color:#3F3F3F; font-weight: bolder; margin-left: 20px;">{{post.title}}</h2>
+                <h4 style="margin: 0%; margin-top: 10px; margin-left: 20px; width:500px;height:50px; display:flex; align-items: center;">{{post.context}}</h4>
+                <h6 style="margin: 0%; margin-top: 5px; margin-left: 20px;">[ {{post.published_time}} ]</h6>
+            </a>
+        </div>
     {% endif %}
     {% endfor %}
-
-    <p><a class="btn btn-warning" href="{% url 'blog_app:create' %}">Create</a></p>
 </ol>
 {% endblock %}

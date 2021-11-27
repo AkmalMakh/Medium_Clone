@@ -4,6 +4,9 @@ from blog import models
 from django.urls import reverse_lazy
 from django.views.generic import View, TemplateView, ListView, DetailView, UpdateView, DeleteView, CreateView
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 class IndexView(TemplateView):
     template_name = "index.html"
 
@@ -15,23 +18,27 @@ class PostListView(ListView):
     # def get_queryset(self):
     #     return models.Post.objects.filter(published_time__lte=timezone.now()).order_by('-publisheded_time')
 
-class PostDraftView(ListView):
+class PostDraftView(LoginRequiredMixin, ListView):
+    login_url ="/login/"
     context_object_name = "posts"
     model = models.Post
     template_name = "blog_app/post_draft.html"
 
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
+    login_url ="/login/"
      # defining conetxt object name by default it is school_list because of we are using Listview
     context_object_name = 'post_details'
     model = models.Post
     template_name = 'blog_app/post_detail.html'
     
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
+    login_url ="/login/"
     fields = ('title', 'author', 'context')
     model = models.Post
     template_name = 'blog_app/update.html'
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin, UpdateView):
+    login_url ="/login/"
     fields = ('context',)
     model = models.Post
     template_name = 'blog_app/update.html'
@@ -42,7 +49,7 @@ def PostPublish(request, pk):
     print("???")
     return redirect("blog_app:detail", pk=pk)
 
-def PostUnPublish(request, pk):
+def UnPublish(request, pk):
     post = get_object_or_404(models.Post, pk=pk)
     post.published_time = None
     post.save()
@@ -55,12 +62,14 @@ class CommentCreateView(CreateView):
     model = models.Comment
     template_name = 'blog_app/coUpdate.html'
 
-class CommentUpdateView(CreateView):
+class CommentUpdateView(LoginRequiredMixin, CreateView):
+    login_url ="/login/"
     fields = ('context')
     model = models.Comment
     template_name = 'blog_app/coUpdate.html'
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(LoginRequiredMixin, DeleteView):
+    login_url ="/login/"
     model = models.Post
     template_name = 'blog_app/delete.html'
     context_object_name = 'posts'

@@ -13,7 +13,7 @@
     {{ form.as_p }}
     {% if form.instance.pk %}
     {% if post.published_time %}
-    <a type="submit" class="btn btn-primary" href="{% url 'blog_app:postUnPublish' pk=post.pk %}">UnPublish</a>
+    <a type="submit" class="btn btn-primary" href="{% url 'blog_app:unPublish' pk=post.pk %}">.</a>
     {% else %}
     <a type="submit" class="btn btn-primary" href="{% url 'blog_app:postPublish' pk=post.pk %}">Publish</a>
     {% endif %}
