@@ -2,13 +2,22 @@
 
 <h1>This is a list of posts</h1>
 
-<ol>
+<div class="list-group">
 	{% for post in posts %}
-	<h2>
-		<li><a href="{% url 'basic_app:postDetail' pk=post.pk %}">{{post.title}}</a></li>
-		<a class="btn btn-primary" href="{% url 'basic_app:postUnpublish' pk=post.pk %}">Unpublish</a>
-	</h2>
+	<a
+		style="width: 50%"
+		href="{% url 'basic_app:postDetail' pk=post.pk %}"
+		class="list-group-item list-group-item-action"
+	>
+		<div class="d-flex w-50 justify-content-between">
+			<h3 class="mb-1">{{post.title}}</h3>
+			<small class="text-muted">{{post.publishTime}}</small>
+		</div>
+		<p class="mb-1">{{post.content}}</p>
+		<small class="text-muted">{{post.author}}</small>
+	</a>
+
 	{% endfor %}
-</ol>
+</div>
 
 {% endblock %}
