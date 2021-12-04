@@ -9,9 +9,12 @@
 		href="{% url 'basic_app:postDetail' pk=post.pk %}"
 		class="list-group-item list-group-item-action"
 	>
-		<div class="d-flex w-50 justify-content-between">
+		<div
+			class="d-flex w-50 justify-content-between"
+			style="display: flex; flex-direction: row; justify-content: space-between"
+		>
 			<h3 class="mb-1">{{post.title}}</h3>
-			<small class="text-muted">{{post.publishTime}}</small>
+			<small class="text-muted" style="margin-top: 20px">{{post.publishTime}}</small>
 		</div>
 		<p class="mb-1">{{post.content}}</p>
 		<small class="text-muted">{{post.author}}</small>

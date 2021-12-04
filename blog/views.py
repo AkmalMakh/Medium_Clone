@@ -3,6 +3,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import fields
 from django.views.generic import(View, TemplateView, CreateView, DetailView, ListView, DeleteView, UpdateView)
 from django.views.generic.detail import DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 
@@ -16,7 +18,8 @@ class indexView(TemplateView):
 
 # needs post list class in here as default home page
 
-class postCreateView(CreateView):
+class postCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/login/'
     template_name = 'blog_app/postCreate.html'
     model = models.Post
     fields = ('title', 'content', 'author')
@@ -35,19 +38,22 @@ class postListView(ListView):
     def get_queryset(self):
         return models.Post.objects.filter(publishTime__lte=timezone.now()).order_by('-publishTime')
 
-class postDraftListView(ListView):
+class postDraftListView(LoginRequiredMixin, ListView):
+    login_url = '/login/'
     context_object_name = 'posts'
     template_name = 'blog_app/postDraftList.html'
     model = models.Post
 
-class postDeleteView(DeleteView):
+class postDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = '/login/'
     model = models.Post
     context_object_name = 'posts'
     template_name = 'blog_app/postDelete.html'
     success_url = reverse_lazy('basic_app:draftList')
 
 
-class postUpdateView(UpdateView):
+class postUpdateView(LoginRequiredMixin, UpdateView):
+    login_required = '/login/'
     model = models.Post
     form_class = postForm
     template_name = 'blog_app/postUpdate.html'
@@ -65,13 +71,14 @@ class commentCreateView(CreateView):
         print(self.object.pk)   # this is getting post.pk
         return reverse('basic_app:postDetail', kwargs={'pk': self.object.post.pk})    
 
+@login_required
 def postUnpublish(request, pk):
     post = get_object_or_404(models.Post, pk = pk)
     post.publishTime = None
     post.save()
     return redirect('basic_app:postList')
     
-
+@login_required
 def postPublish(request, pk):
     post = get_object_or_404(models.Post, pk = pk)
     post.publish()
