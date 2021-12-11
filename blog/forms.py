@@ -1,7 +1,7 @@
 from django import forms
 from django.db.models import fields
 from django.forms import widgets
-from blog.models import Comment, Post
+from blog.models import Comment, Post, Image
 
 class postForm(forms.ModelForm):
 
@@ -22,3 +22,9 @@ class commentForm(forms.ModelForm):
             'author': forms.TextInput(attrs={'class': 'textinputclass'}),
             'content': forms.Textarea(attrs={'class': 'editable medium-editor-textarea'})
         }
+
+class imageForm(forms.ModelForm):
+
+    class Meta():
+        model = Image
+        fields = ('title', 'image')

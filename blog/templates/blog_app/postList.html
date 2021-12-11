@@ -17,7 +17,13 @@
 			<small class="text-muted" style="margin-top: 20px">{{post.publishTime}}</small>
 		</div>
 		<p class="mb-1">{{post.content}}</p>
-		<small class="text-muted">{{post.author}}</small>
+		<div
+			class="d-flex w-50 justify-content-between"
+			style="display: flex; flex-direction: row; justify-content: space-between"
+		>
+			<small class="text-muted">{{post.author}}</small>
+			<small class="text-muted" style="color: blue">Comments: {{post.comments.count}}</small>
+		</div>
 	</a>
 
 	{% endfor %}

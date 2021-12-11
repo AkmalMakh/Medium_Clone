@@ -12,9 +12,14 @@
 			<ul class="nav navbar-nav">
 				<li><a class="navbar-band" href="{% url 'basic_app:postList' %}">Homepage</a></li>
 				<li><a class="navbar-band" href="{% url 'admin:index' %}">Admin</a></li>
+				{% if user.is_authenticated %}
 				<li><a class="navbar-band" href="{% url 'basic_app:postCreate' %}">Create Post</a></li>
+				<li><a class="navbar-band" href="{% url 'basic_app:imageUpload' %}">Upload image</a></li>
 				<li><a class="navbar-band" href="{% url 'basic_app:draftList' %}">Draft</a></li>
-				<li><a class="navbar-band navbar-right" href="{% url 'login' %}">Log in</a></li>
+				<li><a class="navbar-band" href="{% url 'logout' %}">Log out</a></li>
+				{% else %}
+				<li><a class="navbar-band" href="{% url 'login' %}">Log in</a></li>
+				{% endif %}
 			</ul>
 		</nav>
 
