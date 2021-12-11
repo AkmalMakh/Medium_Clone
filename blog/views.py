@@ -79,10 +79,10 @@ def imageUploadView(request):
         if form.is_valid():
             form.save()
             img_obj = form.instance
-            return render(request, '', {'form': form, 'img_obj': img_obj})
+            return render(request, 'blog_app/imageUpload.html', {'form': form, 'img_obj': img_obj})
     else:
         form = imageForm()
-    return render(request, '', {'form': form})
+    return render(request, 'blog_app/imageUpload.html', {'form': form})
 
 @login_required
 def postUnpublish(request, pk):
