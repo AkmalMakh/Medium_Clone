@@ -10,6 +10,7 @@ from django.urls import reverse
 class Post(models.Model):
     title = models.CharField(max_length=180)
     author = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='users/%Y/%m/%d/', blank=True)
     context = models.TextField(default="Type your Text")
     created_time = models.DateTimeField(default=timezone.now())
     published_time = models.DateTimeField(blank=True, null=True)

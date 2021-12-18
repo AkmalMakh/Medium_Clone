@@ -9,7 +9,7 @@
     {% if not post.published_time %}
         <h6 style="margin: 0%; margin-top: 30px;">[ {{post.author}} ]</h6>
         <h2 style="color:#3F3F3F; font-weight: bolder; margin-top: 5px;">
-            <a style="color:#3F3F3F; text-decoration: none;" href="{% url 'blog_app:detail' pk=post.pk %}">{{post.title}}</a>
+            <a style="color:#3F3F3F; text-decoration: none;" href="{% url 'blog_app:draft_detail' pk=post.pk %}">{{post.title}}</a>
         </h2>
         <h4 style="margin: 0%; margin-top: 5px; margin-left: 20px;">{{post.context}}</h4>
     {% endif %}

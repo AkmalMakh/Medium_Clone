@@ -8,15 +8,18 @@
     {%endif%}
 </h1>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     {% if form.instance.pk %}
-    {% if post.published_time %}
-    <a type="submit" class="btn btn-primary" href="{% url 'blog_app:unPublish' pk=post.pk %}">.</a>
-    {% else %}
-    <a type="submit" class="btn btn-primary" href="{% url 'blog_app:postPublish' pk=post.pk %}">Publish</a>
+        {% if post.published_time %}
+            <a type="submit" class="btn btn-primary" href="{% url 'blog_app:unPublish' pk=post.pk %}">.</a>
+        {% else %}
+            <a type="submit" class="btn btn-primary" href="{% url 'blog_app:postPublish' pk=post.pk %}">Publish</a>
+        {% endif %}
     {% endif %}
+    {% if img_obj %}
+        <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">
     {% endif %}
     <input type="submit" class="btn btn-primary" value="Submit" />
 </form>

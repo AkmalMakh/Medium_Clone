@@ -1,0 +1,25 @@
+{% extends 'blog_app/blog_app.html' %}
+
+{% block body_block %}
+<div class="jumbtron">
+    <h1>Welcome to the Post Detail Page</h1>
+    <h2>Post Details:</h2>
+    <p>Name: {{post_details.title}}</p>
+    <p>Poster: {{post_details.author}}</p>
+    <p>Context: {{post_details.context}}</p>
+    {% if post_details.image %}
+   
+      <img href="{{ post_details.image.url }}" alt="connect" style="max-height:300px">
+    {% endif %}
+    <h3>Comments:</h3>
+
+      {% for comment in post_details.comments.all %}
+        <p>{{comment.nick}} who comment "{{comment.context}}".</p>
+      {% endfor %}
+
+</div>
+<div>
+  <p><a class="btn btn-warning" href="{% url 'blog_app:update' pk=post_details.pk %}">Update</a></p>
+  <p><a class="btn btn-delete" href="{% url 'blog_app:delete' pk=post_details.pk %}">Delete</a></p>
+</div>
+{% endblock%}

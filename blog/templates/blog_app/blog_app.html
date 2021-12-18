@@ -12,8 +12,15 @@
 <nav class="navbar navbar-default navbar-static-top">
     <ul class="nav navbar-nav">
         <li><a class="navbar-band" href="{% url 'blog_app:list' %}">Blogs</a> </li>
-        <li><a class="navbar-band" href="{% url 'blog_app:draft' %}">Drafts</a> </li>
-        <li><a class="navbar-band" href="{% url 'admin:index' %}">Admin</a></li>
+        {% if user.is_authenticated %}
+            <li><a class="navbar-band" href="{% url 'blog_app:draft' %}">Drafts</a> </li>
+            {% if user.is_superuser %}
+                <li><a class="navbar-band" href="{% url 'admin:index' %}">Admin</a></li>
+            {% endif %}
+            <li><a class="navbar-band" href="{% url 'logout' %}">Logout</a> </li>
+        {% else %}
+            <li><a class="navbar-band" href="{% url 'login' %}">Login</a> </li>
+        {% endif %}
     </ul>
 </nav>
 

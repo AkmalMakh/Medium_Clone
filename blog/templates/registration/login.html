@@ -1,6 +1,6 @@
 {% extends 'blog_app/blog_app.html' %}
 
-{% block context %}
+{% block body_block %}
 <div class="jumbotron">
     <h2>Please Login: </h2>
     <h3>(Must be Superuser. please check admin for issues.)</h3> 
@@ -8,7 +8,7 @@
     {% if form.errors %}
         <p>Your username and passwords didn't match. Please try again.</p>
     {% endif %}
-        <form method="POST" action="{% yrl 'login' %}">
+        <form method="POST" action="{% url 'login' %}">
             {% csrf_token %}
             {{ form.as_p }}
 
@@ -16,3 +16,4 @@
             <input type="hidden" name="next" value="{{ next }}">
         </form>
 </div>
+{% endblock %}

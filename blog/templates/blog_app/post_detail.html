@@ -7,6 +7,9 @@
     <p>Name: {{post_details.title}}</p>
     <p>Poster: {{post_details.author}}</p>
     <p>Context: {{post_details.context}}</p>
+    {% if img_obj.image %}
+      <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">
+    {% endif %}
     <h3>Comments:</h3>
 
       {% for comment in post_details.comments.all %}
@@ -15,8 +18,12 @@
 
 </div>
 <div>
-  <p><a class="btn btn-warning" href="{% url 'blog_app:update' pk=post_details.pk %}">Update</a></p>
   <p><a class="btn btn-warning" href="{% url 'blog_app:coCreate' %}">Comment Create</a></p>
-  <p><a class="btn btn-delete" href="{% url 'blog_app:delete' pk=post_details.pk %}">Delete</a></p>
+  {% if user.is_authenticated and user.name == post_details.author %}
+    <p><a class="btn btn-warning" href="{% url 'blog_app:update' pk=post_details.pk %}">Update</a></p>
+  {% endif %}
+  {% if user.is_superuser %}
+    <p><a class="btn btn-delete" href="{% url 'blog_app:delete' pk=post_details.pk %}">Delete</a></p>
+  {% endif %}
 </div>
 {% endblock%}

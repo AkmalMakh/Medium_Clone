@@ -4,6 +4,9 @@ from blog import models
 from django.urls import reverse_lazy
 from django.views.generic import View, TemplateView, ListView, DetailView, UpdateView, DeleteView, CreateView
 
+from django.shortcuts import render
+from .forms import PostForm
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -25,15 +28,21 @@ class PostDraftView(LoginRequiredMixin, ListView):
     template_name = "blog_app/post_draft.html"
 
 class PostDetailView(LoginRequiredMixin, DetailView):
-    login_url ="/login/"
      # defining conetxt object name by default it is school_list because of we are using Listview
     context_object_name = 'post_details'
     model = models.Post
     template_name = 'blog_app/post_detail.html'
+
+class PostDraftDetailView(LoginRequiredMixin, DetailView):
+     # defining conetxt object name by default it is school_list because of we are using Listview
+    context_object_name = 'post_details'
+    model = models.Post
+    
+    template_name = 'blog_app/post_draft_detail.html'
     
 class PostCreateView(LoginRequiredMixin, CreateView):
     login_url ="/login/"
-    fields = ('title', 'author', 'context')
+    fields = ('title', 'author', 'context', 'image')
     model = models.Post
     template_name = 'blog_app/update.html'
 
@@ -46,7 +55,6 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
 def PostPublish(request, pk):
     post = get_object_or_404(models.Post, pk=pk)
     post.publish()
-    print("???")
     return redirect("blog_app:detail", pk=pk)
 
 def UnPublish(request, pk):
@@ -74,4 +82,17 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'blog_app/delete.html'
     context_object_name = 'posts'
     success_url = reverse_lazy('blog_app:list')
+
+def image_upload_view(request):
+    """Process images uploaded by users"""
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            # Get the current instance object to display in the template
+            img_obj = form.instance
+            return render(request, 'post_list.html', {'form': form, 'image': img_obj})
+    else:
+        form = PostForm()
+    return render(request, 'post_list.html', {'form': form})
 
