@@ -9,6 +9,7 @@ from django.utils import timezone
 class Post(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField(default='')
+    image = models.ImageField(upload_to='images')
     author = models.ForeignKey('auth.User', on_delete=CASCADE)
     createTime = models.DateTimeField(default=timezone.now())
     publishTime = models.DateTimeField(blank=True, null=True)
@@ -40,9 +41,3 @@ class Comment(models.Model):
     def __str__(self):
         return self.author
 
-class Image(models.Model):
-    title = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='images')
-
-    def __str__(self):
-        return self.title

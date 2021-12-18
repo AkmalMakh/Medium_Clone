@@ -14,7 +14,6 @@
 				<li><a class="navbar-band" href="{% url 'admin:index' %}">Admin</a></li>
 				{% if user.is_authenticated %}
 				<li><a class="navbar-band" href="{% url 'basic_app:postCreate' %}">Create Post</a></li>
-				<li><a class="navbar-band" href="{% url 'basic_app:imageUpload' %}">Upload image</a></li>
 				<li><a class="navbar-band" href="{% url 'basic_app:draftList' %}">Draft</a></li>
 				<li><a class="navbar-band" href="{% url 'logout' %}">Log out</a></li>
 				{% else %}

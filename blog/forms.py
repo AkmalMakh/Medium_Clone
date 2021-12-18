@@ -1,13 +1,13 @@
 from django import forms
 from django.db.models import fields
 from django.forms import widgets
-from blog.models import Comment, Post, Image
+from blog.models import Comment, Post
 
 class postForm(forms.ModelForm):
 
     class Meta():
         model = Post
-        fields = ('author', 'title', 'content')
+        fields = ('author', 'title', 'content', 'image')
         widgets = {
             'title': forms.TextInput(attrs={'class': 'textinputclass'}),
             'content': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'})
@@ -23,8 +23,8 @@ class commentForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'class': 'editable medium-editor-textarea'})
         }
 
-class imageForm(forms.ModelForm):
+# class imageForm(forms.ModelForm):
 
-    class Meta():
-        model = Image
-        fields = ('title', 'image')
+#     class Meta():
+#         model = Image
+#         fields = ('title', 'image')

@@ -1,8 +1,7 @@
 from django.conf.urls import url
 from django.urls import path
 from blog import views
-from blog.forms import imageForm
-from .views import (imageUploadView, postCreateView, postDetailView,indexView, postListView, postDraftListView, postPublish,     postDeleteView)
+from .views import (postCreateView, postDetailView,indexView, postListView, postDraftListView, postPublish,     postDeleteView)
 
 app_name = 'basic_app'
 
@@ -17,5 +16,4 @@ urlpatterns = [
     url(r'^comment/(?P<pk>\d+)/$', views.commentCreateView.as_view(), name='commentCreate'),
     path('about/', indexView.as_view(), name='about'),
     path('draft/', postDraftListView.as_view(), name='draftList'),
-    path('upload/', views.imageUploadView,  name='imageUpload')
 ]

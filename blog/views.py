@@ -8,7 +8,6 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 from django.shortcuts import render
-from .forms import imageForm
 
 from blog.forms import postForm
 from . import models
@@ -24,7 +23,7 @@ class postCreateView(LoginRequiredMixin, CreateView):
     login_url = '/login/'
     template_name = 'blog_app/postCreate.html'
     model = models.Post
-    fields = ('title', 'content', 'author')
+    fields = ('title', 'content', 'author', 'image')
     success_url = reverse_lazy('basic_app:draftList')
 
 class postDetailView(DetailView):
@@ -73,16 +72,6 @@ class commentCreateView(CreateView):
         print(self.object.pk)   # this is getting post.pk
         return reverse('basic_app:postDetail', kwargs={'pk': self.object.post.pk})    
 
-def imageUploadView(request):
-    if request.method == 'POST':
-        form = imageForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            img_obj = form.instance
-            return render(request, 'blog_app/imageUpload.html', {'form': form, 'img_obj': img_obj})
-    else:
-        form = imageForm()
-    return render(request, 'blog_app/imageUpload.html', {'form': form})
 
 @login_required
 def postUnpublish(request, pk):
