@@ -19,14 +19,16 @@
 
 
     {# Custom CSS#}
-    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
 
+    <link rel="stylesheet" href="{% static 'css/new.css' %}">
     {# Fonts#}
     <link href="https://fonts.googleapis.com/css?family=Montserrat|Russo+One" rel="stylesheet">
-
+  
 </head>
 <body>
+   
     <!-- Navbar -->
+   
     <nav class="navbar navbar-default techfont custom-navbar">
         <div class="container">
             <ul class="nav navbar-nav">
@@ -48,7 +50,7 @@
                     <a href="{% url 'logout' %}">Log Out</a>
                 </li>
                 <li>
-                    <a >Welcome {{user.username}}</a>
+                    <a >Welcome {{user.username }}</a>
                 </li>
                 {% else %}
                 <li>
@@ -64,7 +66,7 @@
     <!-- Contetn block -->
     <div class="content container">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="blog_posts">
                     {% block content %}
                     

@@ -1,0 +1,26 @@
+#main-images{
+    width: 200px; 
+    aspect-ratio: auto 200 / 134;
+    height: 134px;
+}
+#posts_content a:link{
+        text-decoration: none;
+}
+#posts_content a{
+    color: #000;
+}
+
+h1{
+    font-size: 44px;
+}
+
+.centered {
+    text-align: center;
+    font-size: 0;
+ }
+ .centered > div {
+    float: none;
+    display: inline-block;
+    text-align: left;
+    font-size: 16px;
+ }
