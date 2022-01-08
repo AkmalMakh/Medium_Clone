@@ -2,7 +2,6 @@ from django.urls import path
 from .views import CommentCreateView, CommentUpdateView, PostCreateView, \
  PostUpdateView, PostListView, PostDetailView, PostDraftView, PostDeleteView, PostDraftDetailView
 from django.conf.urls import url
-
 from blog import views
 
 from django.conf import settings

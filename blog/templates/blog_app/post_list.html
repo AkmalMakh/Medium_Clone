@@ -8,16 +8,19 @@
     {% for post in posts %}
     {% if post.published_time %}
         <div style="margin: 0%; margin-top: 20px; margin-bottom:20px; width: 800px; height: 185px;border:2px ridge rgba(186, 186, 186, .3);">
-            <a style="color:#3F3F3F; text-decoration: none;" href="{% url 'blog_app:detail' pk=post.pk %}">
-                <h2 style="margin: 0%; margin-top: 25px; color:#3F3F3F; font-weight: bolder; margin-left: 20px;">{{post.title}}</h2>
-                <h6 style="margin: 0%; margin-top: 5px; margin-left: 20px; margin-bottom: 0px;">[ {{post.author}} ]</h6>
-                <h4 style="margin: 0%; margin-top: 5px; margin-left: 20px; width:500px;height:50px; display:flex; align-items: center;">{{post.context}}</h4>
-                <h6 style="margin: 0%; margin-top: 5px; margin-left: 20px;">[ {{post.published_time}} ]</h6>
-                <h6 style="margin: 0%; margin-top: 1px; margin-left: 20px;">[ Comments : {{post.comments.count}} ]</h6>
-
-                {% if post.image %}
-                    <img href="{{ post.image.url }}" alt="connect" style="max-height:170px;">
-                {% endif %}
+            <a style="color:#3F3F3F; text-decoration: none; display: flex; flex-direction: row;" href="{% url 'blog_app:detail' pk=post.pk %}">
+                <div>
+                    <h2 style="margin: 0%; margin-top: 25px; color:#3F3F3F; font-weight: bolder; margin-left: 20px;">{{post.title}}</h2>
+                    <h6 style="margin: 0%; margin-top: 5px; margin-left: 20px; margin-bottom: 0px;">[ {{post.author}} ]</h6>
+                    <h4 style="margin: 0%; margin-top: 5px; margin-left: 20px; width:500px;height:50px; display:flex; align-items: center;">{{post.context}}</h4>
+                    <h6 style="margin: 0%; margin-top: 5px; margin-left: 20px;">[ {{post.published_time}} ]</h6>
+                    <h6 style="margin: 0%; margin-top: 1px; margin-left: 20px;">[ Comments : {{post.comments.count}} ]</h6>
+                </div>
+                <div style="justify-self: end; align-self: center;">
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="connect" style="max-height:170px; max-width: 200px;">
+                    {% endif %}
+                </div>
             </a>
         </div>
     {% endif %}
